@@ -1,0 +1,11 @@
+
+------[NOME:]------
+Date Inicialize: 27 maio de 2024
+Date to finish:  Data Final: DD/MM/AAAA
+Date to progress:null
+Description:
+	Descreva aqui as etapas:
+Ex.
+Inicio - Levantamento de dados
+Durante - Buscar novas parcerias
+___________________________________________________________________________
