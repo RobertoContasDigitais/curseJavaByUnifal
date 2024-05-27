@@ -1,10 +1,4 @@
 Arquivo criado sexta-feira, de 24 maio de 2024
-<<<<<<< HEAD
-2  Projeto Engenharia das Reações Químicas
-6  Projeto Conexões de Saberes
-9  Projeto RaspBerryePi
-19  Projeto Cuntivando Ervas Medicinais
-=======
 0  Projeto Java
 1  Projeto Engenharia das Reações Químicas
 2  Projeto Conexões de Saberes
@@ -20,4 +14,6 @@ Arquivo criado sexta-feira, de 24 maio de 2024
 13  13
 14  14
 15  15
->>>>>>> b91d010 (criado alguns componentes de interface gráfica)
+16  16
+17  17
+18  18
