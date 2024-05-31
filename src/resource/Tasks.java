@@ -11,7 +11,7 @@ public class Tasks{
     private String description;
     @SuppressWarnings("deprecation")
     private Locale locale = new Locale("pt", "BR");
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM 'de' yyyy", locale);
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", locale);
  
     public Tasks(String name, String description, String dataEntrega, int size){
         this.name = name;
@@ -25,7 +25,7 @@ public class Tasks{
         this.dataInicio = simpleDateFormat.format( new GregorianCalendar().getTime());
     }
 
-    public String getName(){
+    public String getName(){//ok
         return this.name;
     }
 
@@ -37,7 +37,7 @@ public class Tasks{
         return this.dataInicio;
     }
 
-    public String getDataEntrega() {
+    public String getDataEntrega() {//ok
         return this.dataEntrega;
     }
 
@@ -78,8 +78,11 @@ public class Tasks{
         return  "\n"+
                 "------["+this.name.toUpperCase()+"]------\n"+
                 "Date Inicialize: "+this.dataInicio+"\n"+
-                "Date to finish:  "+this.dataEntrega+"\n"+
-                "Date to progress:"+this.tempoRestante+"\n"+
+                "Date to finish :  "+this.dataEntrega+"\n"+
+                "Progress       :"+"-----CRIAR----"+"\n"+
+                "Task Status    :"+"-----CRIAR----"+"\n"+
+                "Task Map       :"+"-----CRIAR----"+"\n"+
+                "To be warned   :"+"-----YES/NO---"+"\n"+
                 "Description:\n"+
                     "\t"+this.description+"\n"+
                 "___________________________________________________________________________\n";

@@ -9,7 +9,7 @@ public class MainFrame extends JFrame{
     public MainFrame(String title, int width, int height){
         super(title);
         super.setLayout(null);
-        super.setLocation(1400,350);
+        super.setLocation(900,200);
         super.setSize(width,height);
         super.setResizable(false);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,10 +29,12 @@ public class MainFrame extends JFrame{
         myFramComponents.createLabel("Tarefa", esp, lin*2, 120, 25);
         myFramComponents.createTextFild("Senha", col+esp, lin*2, 120, 25, "keyword");
         myFramComponents.createButons("Buscar Taferas do Usuário", esp, lin*3, col*2, 25, "buscar");
-
+        myFramComponents.createButons("Editar ->", esp, lin*4, col, 25, "editar");
+        myFramComponents.createTextFild("Id", esp+col, lin*4, col, 25, "editar");
         myFramComponents.createButons("Nova Tarefa", col*2+esp*4, lin, col, lin, "dialog");
+        myFramComponents.createTextArea("Descrição:\nId - Tarefa", 10, lin*8, col*5-10, lin*9, "textarea");
 
-        // myFramComponents.createButons("Nova Tarefa", 20, 115, 110, 25);
+        
 
         System.out.println(this.width);
         System.out.println(col);
@@ -41,7 +43,6 @@ public class MainFrame extends JFrame{
         
         
 
-        myFramComponents.createTextArea("Descrição:", 10, lin*8, col*5-10, lin*9, "textarea");
 
         // label1.createButons("Buscar", 100, 150, 120, 20);
         this.add(myFramComponents);

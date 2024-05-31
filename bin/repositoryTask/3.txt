@@ -1,0 +1,11 @@
+
+------[ATV AVALIATIVA DE ENDENHARIA DAS REAÇÕES QUÍMICAS]------
+Date Inicialize: 28/05/2024
+Date to finish :  07/06/2024ḿ
+Progress       :-----CRIAR----
+Task Status    :-----CRIAR----
+Task Map       :-----CRIAR----
+To be warned   :-----YES/NO---
+Description:
+	Conteudo dos capitulos 5 a 7 do livro do Fogler	
+___________________________________________________________________________

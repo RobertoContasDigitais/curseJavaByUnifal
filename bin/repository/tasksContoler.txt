@@ -1,19 +1,5 @@
-Arquivo criado sexta-feira, de 24 maio de 2024
-0  Projeto Java
-1  Projeto Engenharia das Reações Químicas
-2  Projeto Conexões de Saberes
-3  Projeto RaspBerryePi
-4  Projeto Cuntivando Ervas Medicinais
-6  Academia
-7  Nome:
-8  Nome:
-9  Nome:
-10  10
-11  11
-12  12
-13  13
-14  14
-15  15
-16  16
-17  17
-18  18
+1  Prova de Termidiâmica II
+2  Seminario de controle ambiental
+3  Atv Avaliativa de Endenharia das Reações químicas
+4  Prova de Calor e Massa II
+5  Filtros Mangas

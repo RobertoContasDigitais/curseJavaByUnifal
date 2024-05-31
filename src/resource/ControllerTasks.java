@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -24,6 +21,7 @@ public class ControllerTasks{
 
     public ControllerTasks(){
         this.map  = new LinkedHashMap<Integer,String>();
+        loadTask();
     }
 
 //carrega o arquivo id-description
@@ -32,30 +30,12 @@ public class ControllerTasks{
         try {
             if(!this.file.exists()){
                 this.file.createNewFile();
-                FileWriter fileWriter = new FileWriter(this.file);
-                @SuppressWarnings("deprecation")
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                    "EEEE, 'de' dd MMMM 'de' yyyy", new Locale("pt","BR")); 
-                String firstLine =  "Arquivo criado " + 
-                    simpleDateFormat.format( new GregorianCalendar().getTime());
-
-                fileWriter.write(firstLine);
-                fileWriter.close();
-    
             }else{
                 Scanner scanner = new Scanner(this.file);
-                for(int i = 0 ; scanner.hasNextLine(); i++) {
-                    if(i==0)
-                    {
-                        String line = (scanner.nextLine());
-                        System.out.println(line);
-                    }else
-                    {
-                        String line = (scanner.nextLine());
-                        String[] lineTupla = line.split("  ");
-                        this.map.put(Integer.valueOf(lineTupla[0]), lineTupla[1]);
-                    
-                    }
+                while(scanner.hasNextLine()) {
+                    String line = (scanner.nextLine());
+                    String[] lineTupla = line.split("  ");
+                    this.map.put(Integer.valueOf(lineTupla[0]), lineTupla[1]);
                 }
                 scanner.close();
             }
@@ -72,7 +52,6 @@ public class ControllerTasks{
 
     public void createNewTask(String name, String dataEntrega, String description ){
         
-        loadTask();
         Tasks task = new Tasks(name, description,dataEntrega, map.size());
         saveInFinalTasksController(task);
         saveNewTask(task);
@@ -84,7 +63,7 @@ public class ControllerTasks{
         try {
             loadTask();
             FileWriter fileWriter = new FileWriter(file, true);
-            fileWriter.write(newTasks.getId()+"  "+newTasks.getId()+"\n");  
+            fileWriter.write(newTasks.getId()+"  "+newTasks.getName()+"\n");  
             fileWriter.close(); 
         }catch (IOException e) {
             e.printStackTrace();
@@ -92,40 +71,20 @@ public class ControllerTasks{
     }
 
     public void saveNewTask(Tasks task){
-        Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/", String.valueOf(task.getId()) + ".txt");
+        Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",
+        String.valueOf(task.getId()) + ".txt");
         try {
                 Files.createDirectories(path.getParent());
                 FileWriter fileWriter = new FileWriter(path.toFile());
                 fileWriter.write(task.toString());
                 fileWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-//cria uma nova Task no controle de task e recarrega o map
-/*    public void writerNewTask(){
-        try {
-            FileWriter fileWriter = new FileWriter(this.file);
-
-            fileWriter.write();
-            fileWriter.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.map.clear();
-        loadTask();
-    }
-
- */
-
-
-     public void put(Integer key, String taskDescription){
+    public void put(Integer key, String taskDescription){
         this.map.put(key, taskDescription);        
     }
 
