@@ -28,10 +28,11 @@ public class MainFrame extends JFrame{
         myFramComponents.createTextFild("Roberto", col+esp, lin, 120, 25, "user");
         myFramComponents.createLabel("Tarefa", esp, lin*2, 120, 25);
         myFramComponents.createTextFild("Senha", col+esp, lin*2, 120, 25, "keyword");
-        myFramComponents.createButons("Buscar Taferas do Usuário", esp, lin*3, col*2, 25, "buscar");
-        myFramComponents.createButons("Editar ->", esp, lin*4, col, 25, "editar");
-        myFramComponents.createTextFild("Id", esp+col, lin*4, col, 25, "editar");
-        myFramComponents.createButons("Nova Tarefa", col*2+esp*4, lin, col, lin, "dialog");
+        myFramComponents.createButons("Buscar Taferas do Usuário", esp, lin*3, col*2, 25, "buscar",14, true);
+        myFramComponents.createButons("Editar ->", esp, lin*4, col, 25, "editar",14, true);
+        myFramComponents.createTextFild("Id", esp+col, lin*4, col/2, 25, "id");
+        myFramComponents.createButons("Salvar", esp+col+col/2, lin*4, col/2, 25,"salvar", 14, false);
+        myFramComponents.createButons("Nova Tarefa", col*2+esp*4, lin, col, lin, "dialog", 14, true);
         myFramComponents.createTextArea("Descrição:\nId - Tarefa", 10, lin*8, col*5-10, lin*9, "textarea");
 
         

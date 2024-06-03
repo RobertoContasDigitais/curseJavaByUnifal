@@ -7,7 +7,9 @@ Task Status    :-----CRIAR----
 Task Map       :-----CRIAR----
 To be warned   :-----YES/NO---
 Description:
-	Professor Marcos que vai passar um artigo para nos estudar-mos sobre o assu-
-to e apresentar como formato de seminario um trabalho sobre o conteudo de
-poluição do ar
+	Professor Marcos que vai passar um artigo para nos 
+estudar-mos sobre o assuto e apresentar como formato de seminario
+um trabalho sobre o conteudo de poluição do ar, temos que tomar um cui-
+dado especial para falarmos de como foi toda a metodologia de como pode-
+mos incorporar esse assunto junto as demandas do dia a dia
 ___________________________________________________________________________

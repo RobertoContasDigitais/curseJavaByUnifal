@@ -7,5 +7,7 @@ Task Status    :-----CRIAR----
 Task Map       :-----CRIAR----
 To be warned   :-----YES/NO---
 Description:
-	No sei o conteudo que vai cair		
+	No sei o conteudo que vai cair
+MAS PODEMOS OBSERVAR QUE HOUVE UMA DIMINUIÇO DO CONTEUDO
+COM MAIS DETALHAMENTO DOS ESPA
 ___________________________________________________________________________

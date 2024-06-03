@@ -5,6 +5,7 @@ import resource.ControllerTasks;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -16,7 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -33,7 +33,6 @@ public class MyComponents extends JComponent implements ActionListener {
     @SuppressWarnings("rawtypes")
     private LinkedHashMap mapTask;
     private ControllerTasks controllerTasks = new ControllerTasks();
-    private String[] stringToCombox;
 
     public MyComponents(JFrame frame){
         this.frame = frame;
@@ -47,10 +46,16 @@ public class MyComponents extends JComponent implements ActionListener {
         this.frame.add(label);
     }
 
-    public void createButons(String description,  int x, int y, int width, int height, String command){
+    public void createButons(String description,  int x, int y, int width, int height, String command,
+        int fontLength, boolean stylo ){
         JButton button = new JButton(description);
         button.setBounds(x, y, width, height);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
+        if (stylo)
+            button.setFont(new Font("Arial", Font.BOLD, fontLength));
+        else{
+            button.setFont(new Font("Arial", Font.ROMAN_BASELINE, fontLength));
+            button.setMargin(new Insets(0, 0, 0, 0));
+        }
         button.setVisible(true);
         button.setActionCommand(command);
         button.addActionListener(this);
@@ -164,6 +169,19 @@ public class MyComponents extends JComponent implements ActionListener {
 
     }
 
+    public void editorTheTask(String id){
+        try {
+            if(!id.equals("Id")){
+                System.out.println("Aqui tem que criar um metodo que retorne o Task cujo id é a referencia");
+                String taskToLoadString = controllerTasks.editorTaskByControlerId(id);
+                JTextArea commandArea1 = (JTextArea)map.get("textarea");
+                commandArea1.setText(taskToLoadString);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent arg0) {
         String command = arg0.getActionCommand();
@@ -209,11 +227,24 @@ public class MyComponents extends JComponent implements ActionListener {
             case "dialog":
                 openNewDialog();
                 break;
+            
+            case "editar":
+                //TODO aqui tem que fazer algo para editar uma Task modificada
+                /*Primeiro pego o conteudo da textfield -> 
+                     verifico se exixte se é uma entrada válida,
+                     se true busca o valor com essa chave no map
+                     se nãoretorna um erro na tela */
 
-            case "formated":
-                
+                    JTextField commandField3 = (JTextField)map.get("id");
+                    String textField3 = commandField3.getText();                
+                    System.out.println(textField3);
+                    editorTheTask(textField3);
+            case "salvar":
+                JTextArea commandField4Field = (JTextArea)map.get("textarea");
+                JTextField commandField5 = (JTextField)map.get("id");
+                String textField5 = commandField5.getText();                
+                controllerTasks.saveNewTaskEditor(textField5, commandField4Field.getText());
                 break;
-        
             default:
                 break;
         }

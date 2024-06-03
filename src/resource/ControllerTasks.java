@@ -92,4 +92,32 @@ public class ControllerTasks{
         return this.map.containsKey(taskId);
     }
 
+    public String editorTaskByControlerId(String id){
+        Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",id+ ".txt");
+        String stringTaskLoad = "";
+        try {
+            Scanner scanner = new Scanner(path);
+            while (scanner.hasNextLine()) {
+                stringTaskLoad += scanner.nextLine() + "\n";
+            }
+            scanner.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringTaskLoad;    
+    }
+    
+    public void saveNewTaskEditor(String id, String toStringTask){
+        try {
+            Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",id+ ".txt");
+            FileWriter fileWriter = new FileWriter(path.toFile());
+            fileWriter.write(toStringTask);
+            fileWriter.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
 }
