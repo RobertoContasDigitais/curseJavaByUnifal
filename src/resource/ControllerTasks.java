@@ -10,44 +10,67 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 
 //recebe os dados de uma task que foi criada adiciona ele no controller
 //e o controler gerencia as tasks de acordo com o que o admin precisa
 public class ControllerTasks{
 
-    private File file = new File("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repository/tasksContoler.txt");
-
+    private String repository = "repository";
+    private String repositoryTasks = "repository/repositoryTask";
+    private String fileController = "taskController";
+    private File directoriControler = new File(repository);
+    private File directoryTasks = new File(repositoryTasks);
+    
     LinkedHashMap<Integer,String> map;
-
+    
     public ControllerTasks(){
         this.map  = new LinkedHashMap<Integer,String>();
-        loadTask();
+        createDirectories();        
     }
 
-//carrega o arquivo id-description
-    public void loadTask(){
-
+    public void createDirectories(){
+        if(!this.directoriControler.exists()){
+            this.directoriControler.mkdir();
+            this.directoryTasks.mkdir();
+            try {
+                Files.createFile(Paths.get(repository,fileController));
+                System.out.println("Arquivos criados com sucesso!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }           
+        }  
+    }
+    
+    public void loadTaskController(){    
+        File file = new File(this.repository,this.fileController);
         try {
-            if(!this.file.exists()){
-                this.file.createNewFile();
-            }else{
-                Scanner scanner = new Scanner(this.file);
-                while(scanner.hasNextLine()) {
-                    String line = (scanner.nextLine());
-                    String[] lineTupla = line.split("  ");
-                    this.map.put(Integer.valueOf(lineTupla[0]), lineTupla[1]);
-                }
-                scanner.close();
+            Scanner scanner = new Scanner(file);
+            while(scanner.hasNextLine()) {
+                String line = (scanner.nextLine());
+                String[] lineTupla = line.split("  ");
+                this.map.put(Integer.valueOf(lineTupla[0]), lineTupla[1]);
             }
-            
+            scanner.close();
+            System.out.println("O Arquivo["+fileController+"]Foi carregado com sucesso!");            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    public LinkedHashMap getMapTheTaskByUser(String user){
-        return this.map;
+    public LinkedHashMap getMapTheTaskByUser(String user, String passWord){
+        
+        if((user.equals("Roberto")) && (passWord.equals("Senha"))){
+            loadTaskController();
+            return this.map;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Usuário ou senha errado", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null; 
+        }
+        
+
     }
 
     public void createNewTask(String name, String dataEntrega, String description ){
@@ -55,13 +78,14 @@ public class ControllerTasks{
         Tasks task = new Tasks(name, description,dataEntrega, map.size());
         saveInFinalTasksController(task);
         saveNewTask(task);
-        loadTask();
+        loadTaskController();
 
     }
 
     public void saveInFinalTasksController(Tasks newTasks){
+        File file = new File(this.repository,this.fileController);
         try {
-            loadTask();
+            loadTaskController();
             FileWriter fileWriter = new FileWriter(file, true);
             fileWriter.write(newTasks.getId()+"  "+newTasks.getName()+"\n");  
             fileWriter.close(); 
@@ -71,8 +95,7 @@ public class ControllerTasks{
     }
 
     public void saveNewTask(Tasks task){
-        Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",
-        String.valueOf(task.getId()) + ".txt");
+        Path path = Paths.get(this.repositoryTasks,String.valueOf(task.getId()) + ".txt");
         try {
                 Files.createDirectories(path.getParent());
                 FileWriter fileWriter = new FileWriter(path.toFile());
@@ -93,7 +116,7 @@ public class ControllerTasks{
     }
 
     public String editorTaskByControlerId(String id){
-        Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",id+ ".txt");
+        Path path = Paths.get(this.repositoryTasks,id+ ".txt");
         String stringTaskLoad = "";
         try {
             Scanner scanner = new Scanner(path);
@@ -110,12 +133,11 @@ public class ControllerTasks{
     
     public void saveNewTaskEditor(String id, String toStringTask){
         try {
-            Path path = Paths.get("/home/roberto/Documentos/java/curseJavaByUnifal-master/src/repositoryTask/",id+ ".txt");
+            Path path = Paths.get(this.repositoryTasks,id+ ".txt");
             FileWriter fileWriter = new FileWriter(path.toFile());
             fileWriter.write(toStringTask);
             fileWriter.close();
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
     }

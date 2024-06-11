@@ -1,5 +1,6 @@
 package guinterface;
 
+import resource.Checker;
 import resource.ControllerTasks;
 
 import java.awt.Color;
@@ -22,6 +23,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
@@ -122,7 +124,7 @@ public class MyComponents extends JComponent implements ActionListener {
         dialogFieldDate.setVisible(true);
         dialogFieldDate.addFocusListener(new MyFocusListener(dialogFieldDate, "Data Final: DD/MM/AAAA"));
         dialog.add(dialogFieldDate);
-
+        
         @SuppressWarnings("deprecation")
         Locale locale = new Locale("Pt","BR");
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",locale);
@@ -158,8 +160,10 @@ public class MyComponents extends JComponent implements ActionListener {
                 String name = dialogFieldname.getText();
                 String date = dialogFieldDate.getText();
                 String description = dialogAreaDescription.getText();
-                
-                controllerTasks.createNewTask(name, date, description);
+                if(Checker.dateFormat(date) == true)
+                    controllerTasks.createNewTask(name, date, description);
+                else
+                    JOptionPane.showMessageDialog(null, "Algo de errado na data", "Erro", JOptionPane.ERROR_MESSAGE);
                 dialog.dispose();
             }
         });
@@ -171,15 +175,22 @@ public class MyComponents extends JComponent implements ActionListener {
 
     public void editorTheTask(String id){
         try {
-            if(!id.equals("Id")){
+            if((mapTask.containsKey(Integer.valueOf(id)))){
+                System.out.println(id.equals("Id"));
                 System.out.println("Aqui tem que criar um metodo que retorne o Task cujo id é a referencia");
                 String taskToLoadString = controllerTasks.editorTaskByControlerId(id);
                 JTextArea commandArea1 = (JTextArea)map.get("textarea");
                 commandArea1.setText(taskToLoadString);
-            }
+            }else{
+                System.out.println(id.equals("Id"));
+            }    
         } catch (Exception e) {
-            e.printStackTrace();
+            // TODO: handle exception
+            JOptionPane.showMessageDialog(null,"Digite um numero ao campo'Id'","Campo 'Id' vazio",JOptionPane.ERROR_MESSAGE);
         }
+        
+
+  
     }
 
     @Override
@@ -188,11 +199,6 @@ public class MyComponents extends JComponent implements ActionListener {
 
         switch (command) {
             case "buscar":
-                // pegar o conteudo de uma textfild especifica como estpu criando vários componentes com essa classe,
-                //cada os botões não tem referencia sobre qual é a textfild ou a text área que eles vão utilizar.
-                //por isso o map vai guardando as referencias de acordo com as chaves passada para cada método que
-                //constroi um componente um objeto especifico
-
                 JTextField commandField1 = (JTextField)map.get("user");
                 String textField1 = commandField1.getText();                
                 System.out.println(textField1);
@@ -202,7 +208,7 @@ public class MyComponents extends JComponent implements ActionListener {
                 System.out.println(textField2);
               
                 //esse mapa é referentte ao mapa de tarefas map<Integer, Task>
-                this.mapTask = controllerTasks.getMapTheTaskByUser(textField1);
+                this.mapTask = controllerTasks.getMapTheTaskByUser(textField1, textField2);
 
                 JTextArea commandArea1 = (JTextArea)map.get("textarea");
                 
@@ -229,21 +235,18 @@ public class MyComponents extends JComponent implements ActionListener {
                 break;
             
             case "editar":
-                //TODO aqui tem que fazer algo para editar uma Task modificada
-                /*Primeiro pego o conteudo da textfield -> 
-                     verifico se exixte se é uma entrada válida,
-                     se true busca o valor com essa chave no map
-                     se nãoretorna um erro na tela */
-
-                    JTextField commandField3 = (JTextField)map.get("id");
-                    String textField3 = commandField3.getText();                
-                    System.out.println(textField3);
-                    editorTheTask(textField3);
+                JTextField commandField3 = (JTextField)map.get("id");
+                String textField3 = commandField3.getText();                
+                System.out.println(textField3);
+                editorTheTask(textField3);
+                break;
             case "salvar":
                 JTextArea commandField4Field = (JTextArea)map.get("textarea");
                 JTextField commandField5 = (JTextField)map.get("id");
-                String textField5 = commandField5.getText();                
-                controllerTasks.saveNewTaskEditor(textField5, commandField4Field.getText());
+                if(!commandField5.getText().equals("Id")){
+                    String textField5 = commandField5.getText();                
+                    controllerTasks.saveNewTaskEditor(textField5, commandField4Field.getText());
+                }
                 break;
             default:
                 break;

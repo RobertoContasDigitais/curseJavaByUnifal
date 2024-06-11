@@ -76,7 +76,7 @@ public class Tasks{
     @Override
     public String toString(){
         return  "\n"+
-                "------["+this.name.toUpperCase()+"]------\n"+
+                "["+this.name.toUpperCase()+"]\n"+
                 "Date Inicialize: "+this.dataInicio+"\n"+
                 "Date to finish :  "+this.dataEntrega+"\n"+
                 "Progress       :"+"-----CRIAR----"+"\n"+
