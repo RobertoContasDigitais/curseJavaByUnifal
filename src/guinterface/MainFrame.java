@@ -4,7 +4,9 @@ package guinterface;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
+    
     private float width, height;
+    
 
     public MainFrame(String title, int width, int height){
         super(title);
@@ -29,9 +31,9 @@ public class MainFrame extends JFrame{
         myFramComponents.createLabel("Tarefa", esp, lin*2, 120, 25);
         myFramComponents.createTextFild("Senha", col+esp, lin*2, 120, 25, "keyword");
         myFramComponents.createButons("Buscar Taferas do Usuário", esp, lin*3, col*2, 25, "buscar",14, true);
-        myFramComponents.createButons("Editar ->", esp, lin*4, col, 25, "editar",14, true);
+        myFramComponents.createButons("Visualizar ->", esp, lin*4, col, 25, "mostrar",14, true);
         myFramComponents.createTextFild("Id", esp+col, lin*4, col/2, 25, "id");
-        myFramComponents.createButons("Salvar", esp+col+col/2, lin*4, col/2, 25,"salvar", 14, false);
+        myFramComponents.createButons("Editar", esp+col+col/2, lin*4, col/2, 25,"editar", 14, false);
         myFramComponents.createButons("Nova Tarefa", col*2+esp*4, lin, col, lin, "dialog", 14, true);
         myFramComponents.createTextArea("Descrição:\nId - Tarefa", 10, lin*8, col*4-esp/2, lin*9, "textarea");
 

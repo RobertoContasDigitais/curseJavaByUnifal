@@ -7,12 +7,15 @@ import java.util.Locale;
 public class Tasks{
     private int id;
     private String name;
-    private String dataInicio, dataEntrega, tempoRestante, tempoOutros;
+    private String dataInicio, dataEntrega;
     private String description;
+    private String status = "INICIADO";
     @SuppressWarnings("deprecation")
     private Locale locale = new Locale("pt", "BR");
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", locale);
  
+    public Tasks(int id){this.id = id;}
+
     public Tasks(String name, String description, String dataEntrega, int size){
         this.name = name;
         this.description = description;
@@ -21,71 +24,44 @@ public class Tasks{
         getToSystemDate();
     }
 
-    private void getToSystemDate(){//ok
-        this.dataInicio = simpleDateFormat.format( new GregorianCalendar().getTime());
-    }
+    private void getToSystemDate(){this.dataInicio = simpleDateFormat.format( new GregorianCalendar().getTime());}
+    
+    private String getDateNow(){return simpleDateFormat.format( new GregorianCalendar().getTime());}
 
-    public String getName(){//ok
-        return this.name;
-    }
+    public void setStatus(String status){this.status = status;}
 
-    public int getId() {//ok
-        return this.id;
-    }
+    public String getName(){return this.name;}
 
-    public String getDataInicio() {//ok
-        return this.dataInicio;
-    }
+    public void setId(int id){this.id = id;}
+    
+    public void setName(String name){this.name = name;}
+    
+    public void setDateInitialize(String dateInit){this.dataInicio = dateInit;}
+    
+    public void setDateFinal(String dateFinal){this.dataEntrega = dateFinal;}
+    
+    public void setDescription(String description) {this.description = description;}
+    
+    public int getId() {return this.id;}
+    
+    public String getDescription() {return this.description;}
 
-    public String getDataEntrega() {//ok
-        return this.dataEntrega;
-    }
-
-    public void setDataEntrega(String dataEntrega) {// tem que formatar a data
-        String[] dateEntrega = dataEntrega.split("/.- ");
-        for(String d : dateEntrega){
-            System.out.println(d);
-        }
-        this.dataEntrega = dataEntrega;
-    }
-
-    public String getTempoRestante() {// tem que formatar a data
-        return tempoRestante;
-    }
-
-    public void setTempoRestante(String tempoRestante) {// tem que formatar a data
-        this.tempoRestante = tempoRestante;
-    }
-
-    public String getTempoOutros() {// tem que formatar a data
-        return this.tempoOutros;
-    }
-
-    public void setTempoOutros(String tempoOutros) {
-        this.tempoOutros = tempoOutros;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getDateFinal(){return this.dataEntrega;}
+    
+    public String getDareInitial(){return dataInicio;}
     
     @Override
     public String toString(){
-        return  "\n"+
-                "["+this.name.toUpperCase()+"]\n"+
+        return  "["+this.name.toUpperCase()+"]\n"+
                 "Date Inicialize: "+this.dataInicio+"\n"+
-                "Date to finish :  "+this.dataEntrega+"\n"+
-                "Progress       :"+"-----CRIAR----"+"\n"+
-                "Task Status    :"+"-----CRIAR----"+"\n"+
-                "Task Map       :"+"-----CRIAR----"+"\n"+
-                "To be warned   :"+"-----YES/NO---"+"\n"+
-                "Description:\n"+
+                "Date to finish : "+this.dataEntrega+"\n"+
+                "Progress       : "+Checker.dateCheckProgress(this.dataEntrega, this.dataInicio)+"\n"+
+                "Task Status    : "+this.status+"\n"+
+                "Task Map       : "+"-----CRIAR----"+"\n"+
+                "To be warned   : "+"-----YES/NO---"+"\n"+
+                "Description:\n "+
                     "\t"+this.description+"\n"+
-                "___________________________________________________________________________\n";
+                "_________________________________________|ultima edição:"+getDateNow()+"\n";
     }
     
 

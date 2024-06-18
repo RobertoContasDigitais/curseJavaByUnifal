@@ -1,14 +1,12 @@
-
-[BBB]
-Date Inicialize: 10/06/2024
-Date to finish :  01/05/2025
-Progress       :-----CRIAR----
-Task Status    :-----CRIAR----
-Task Map       :-----CRIAR----
-To be warned   :-----YES/NO---
+[APRESENTAÇÃO DO SEMINAÃRIO DE CONTROLE AMBIENTAL]
+Date Inicialize: 18/06/2024
+Date to finish : 19/06/2025
+Progress       : 0.0
+Task Status    : INICIADO
+Task Map       : -----CRIAR----
+To be warned   : -----YES/NO---
 Description:
-	Descreva aqui as etapas:
-Ex.
-Inicio - Levantamento de dados
-Durante - Buscar novas parcerias
-___________________________________________________________________________
+ 	Apresentacao do seminario que refere-se  a um artigo
+
+esse artigo representa a quantidade de conhecimento que temos;
+_________________________________________|ultima edição:18/06/2024

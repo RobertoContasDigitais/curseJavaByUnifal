@@ -2,6 +2,7 @@ package guinterface;
 
 import resource.Checker;
 import resource.ControllerTasks;
+import resource.Tasks;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -31,8 +34,8 @@ import javax.swing.text.MaskFormatter;
 
 public class MyComponents extends JComponent implements ActionListener {
     private JFrame frame;
+    private Tasks task;
     private LinkedHashMap<String,Component> map = new LinkedHashMap<String, Component>();
-    @SuppressWarnings("rawtypes")
     private LinkedHashMap mapTask;
     private ControllerTasks controllerTasks = new ControllerTasks();
 
@@ -103,7 +106,8 @@ public class MyComponents extends JComponent implements ActionListener {
 
     }
     
-    public void openNewDialog(){
+    public void openNewDialog(){//-----------------------dialog para criar tarefas
+
         JDialog dialog = new JDialog(frame,"Adicione sua nova Tarefa", true);
         dialog.setSize(500,600);
         dialog.setLayout(null);
@@ -127,7 +131,8 @@ public class MyComponents extends JComponent implements ActionListener {
         
         @SuppressWarnings("deprecation")
         Locale locale = new Locale("Pt","BR");
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",locale);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",locale);//vai mudar de acordo com o task
+        //aqui tem que modificar de acordo com o task que entrar
         JTextField dialogFieldDateInitial = new JTextField("Data Inicio: " + 
         format.format(new GregorianCalendar().getTime()), (col*4 - esp*2));
         dialogFieldDateInitial.setBounds(col*2, esp + lin, col*2-esp, lin);
@@ -160,11 +165,11 @@ public class MyComponents extends JComponent implements ActionListener {
                 String name = dialogFieldname.getText();
                 String date = dialogFieldDate.getText();
                 String description = dialogAreaDescription.getText();
-                if(Checker.dateFormat(date) == true)
-                    controllerTasks.createNewTask(name, date, description);
-                else
+                if(Checker.dateFormatValidate(date) == true){
+                    controllerTasks.createNewTask(name, Checker.formatDateDefalt(date), description);
+                    dialog.dispose();
+                }else
                     JOptionPane.showMessageDialog(null, "Algo de errado na data", "Erro", JOptionPane.ERROR_MESSAGE);
-                dialog.dispose();
             }
         });
         
@@ -173,20 +178,101 @@ public class MyComponents extends JComponent implements ActionListener {
 
     }
 
+    public void openNewDialogTask(Tasks task){//-----------------------dialog para editar
+        JDialog dialog = new JDialog(frame,"Editar sua nova Tarefa", true);
+        dialog.setSize(500,600);
+        dialog.setLayout(null);
+        dialog.setLocation(850,200);
+
+        int col = (int)dialog.getWidth()/4; int esp = col/5;
+        int lin = (int)dialog.getHeight()/(2*8);
+        
+        //recebe o nome da tarefa
+        JTextField dialogFieldname = new JTextField(task.getName(), (col*4 - esp*2));
+        dialogFieldname.setBounds(esp, esp, col*4-esp*2, lin);
+        dialogFieldname.setBackground(Color.WHITE);
+        dialogFieldname.setEditable(false);
+        dialogFieldname.setVisible(true);
+        dialog.add(dialogFieldname);
+        
+        JTextField dialogFieldDate = new JTextField("Data que Iniciou a tarefa: "+task.getDateFinal());
+        dialogFieldDate.setBounds(esp, esp + lin, col*2-esp, lin);
+        dialogFieldDate.setBackground(Color.WHITE);
+        dialogFieldDate.setEditable(false);
+        dialogFieldDate.setVisible(true);
+        dialog.add(dialogFieldDate);
+        
+        JTextField dialogFieldDateFinal = new JTextField("Data de Entrega: "+task.getDareInitial());
+        dialogFieldDateFinal.setBounds(col*2, esp + lin, col*2-esp, lin);
+        dialogFieldDateFinal.setVisible(true);
+        dialog.add(dialogFieldDateFinal);
+        
+        JLabel messegerByUser = new JLabel("DESCRIÇÃO ABAIXO!");
+        messegerByUser.setBounds(esp, esp + lin*2+10, col*4-esp*2, lin);
+        messegerByUser.setBackground(Color.white);
+        messegerByUser.setVisible(true);
+        dialog.add(messegerByUser);
+
+        //status
+        String[] itens = {"ATIVA", "CANCELADA", "FINALIZADA", "STADBY"};
+        JComboBox<String> cb = new JComboBox<>(itens);
+        cb.setVisible(true);
+        cb.setBounds(col*2, esp + lin*2+5, col*2-esp, lin);
+        dialog.add(cb);
+        cb.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+            task.setStatus( (String)cb.getSelectedItem());
+            }
+        });
+
+        
+        JTextArea dialogAreaDescription = new JTextArea(task.getDescription());
+        dialogAreaDescription.setBounds(esp, lin*3 + lin, col*4-esp*2, lin*10);
+        dialogAreaDescription.setVisible(true);
+        dialog.add(dialogAreaDescription);
+
+        JButton button1Save = new JButton("Salvar Alteração!");
+        button1Save.setBounds(col*2, esp + lin*14, col*2-esp, lin);
+        button1Save.setVisible(true);
+        button1Save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String name = dialogFieldname.getText();
+                String date = dialogFieldDate.getText().split(": ")[1];
+                String description = dialogAreaDescription.getText();
+                if(Checker.dateFormatValidate(date) == true){
+                    System.out.println("aqui vamos salvar o task editado \n");
+                    System.out.println(task.toString());
+                    //aplicando todas as mudanças antes de mandar salvar;
+                    task.setName(name); task.setDateFinal(date); task.setDescription(description); 
+                    controllerTasks.saveNewTask(task);
+                    dialog.dispose();
+                }else
+                    JOptionPane.showMessageDialog(null, "Algo de errado na data", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        dialog.add(button1Save);        
+        dialog.setVisible(true);
+
+
+
+    }
+
     public void editorTheTask(String id){
         try {
-            if((mapTask.containsKey(Integer.valueOf(id)))){
-                System.out.println(id.equals("Id"));
-                System.out.println("Aqui tem que criar um metodo que retorne o Task cujo id é a referencia");
-                String taskToLoadString = controllerTasks.editorTaskByControlerId(id);
+            System.out.println((mapTask.containsKey(Integer.valueOf(id))));
+            System.out.println(!(Integer.valueOf(id)>mapTask.size()));
+            System.out.println(!(Integer.valueOf(id)<0));
+            if((mapTask.containsKey(Integer.valueOf(id))) && !(Integer.valueOf(id)>mapTask.size()) && !(Integer.valueOf(id)<0)){
+                String taskToLoadString = controllerTasks.getInformationTask(id);
                 JTextArea commandArea1 = (JTextArea)map.get("textarea");
                 commandArea1.setText(taskToLoadString);
-            }else{
-                System.out.println(id.equals("Id"));
-            }    
-        } catch (Exception e) {
-            // TODO: handle exception
-            JOptionPane.showMessageDialog(null,"Digite um numero ao campo'Id'","Campo 'Id' vazio",JOptionPane.ERROR_MESSAGE);
+            }
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Digite um numero ao campo'Id' válido","Erro'Id'",JOptionPane.ERROR_MESSAGE);
         }
         
 
@@ -199,19 +285,15 @@ public class MyComponents extends JComponent implements ActionListener {
 
         switch (command) {
             case "buscar":
+            //verificação de usuário
                 JTextField commandField1 = (JTextField)map.get("user");
                 String textField1 = commandField1.getText();                
-                System.out.println(textField1);
-
                 JTextField commandField2 = (JTextField)map.get("keyword");
                 String textField2 = commandField2.getText();
-                System.out.println(textField2);
               
-                //esse mapa é referentte ao mapa de tarefas map<Integer, Task>
+                //busca o map do controler que tem doto id e tarefa -> map<Integer, Task>
                 this.mapTask = controllerTasks.getMapTheTaskByUser(textField1, textField2);
-
-                JTextArea commandArea1 = (JTextArea)map.get("textarea");
-                
+                JTextArea commandArea1 = (JTextArea)map.get("textarea"); //busca o textarea para setar tudo que tem no map
                 String textArea1 = "";
                 
                 //Se o map retornado for vazio tem que avisar na rext área
@@ -227,25 +309,25 @@ public class MyComponents extends JComponent implements ActionListener {
                     commandArea1.setText(textArea1);
                     System.out.println(textArea1);
                 }
-
-
                 break;
             case "dialog":
                 openNewDialog();
                 break;
             
-            case "editar":
+            case "mostrar":
                 JTextField commandField3 = (JTextField)map.get("id");
                 String textField3 = commandField3.getText();                
-                System.out.println(textField3);
                 editorTheTask(textField3);
                 break;
-            case "salvar":
+            
+            case "editar":
                 JTextArea commandField4Field = (JTextArea)map.get("textarea");
                 JTextField commandField5 = (JTextField)map.get("id");
                 if(!commandField5.getText().equals("Id")){
-                    String textField5 = commandField5.getText();                
-                    controllerTasks.saveNewTaskEditor(textField5, commandField4Field.getText());
+                    //carregar todas a infrmaçãos do task cujo id é o id da text área
+                    String textField5 = commandField5.getText();System.out.println(1);                
+                    task = controllerTasks.saveNewTaskEditor(textField5);System.out.println(2);
+                    openNewDialogTask(task);System.out.println(3);
                 }
                 break;
             default:
