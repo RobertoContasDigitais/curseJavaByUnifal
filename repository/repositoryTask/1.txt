@@ -1,7 +1,7 @@
-[PROVA DE CALOR E MASSA]
-Date Inicialize: 18/06/2024
-Date to finish : 21/06/2024
-Progress       : 0.0
+[AAA]
+Date Inicialize: 20/06/2024
+Date to finish : 01/01/2026
+Progress       : 1.0
 Task Status    : INICIADO
 Task Map       : -----CRIAR----
 To be warned   : -----YES/NO---
@@ -10,4 +10,4 @@ Description:
 Ex.
 Inicio - Levantamento de dados
 Durante - Buscar novas parcerias
-_________________________________________|ultima edição:18/06/2024
+_________________________________________|ultima edição:20/06/2024

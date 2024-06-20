@@ -19,7 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -36,6 +35,7 @@ public class MyComponents extends JComponent implements ActionListener {
     private JFrame frame;
     private Tasks task;
     private LinkedHashMap<String,Component> map = new LinkedHashMap<String, Component>();
+    @SuppressWarnings("rawtypes")
     private LinkedHashMap mapTask;
     private ControllerTasks controllerTasks = new ControllerTasks();
 
@@ -321,7 +321,6 @@ public class MyComponents extends JComponent implements ActionListener {
                 break;
             
             case "editar":
-                JTextArea commandField4Field = (JTextArea)map.get("textarea");
                 JTextField commandField5 = (JTextField)map.get("id");
                 if(!commandField5.getText().equals("Id")){
                     //carregar todas a infrmaçãos do task cujo id é o id da text área

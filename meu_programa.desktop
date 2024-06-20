@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Name=Meu Programa Java
+Comment=Executar meu programa Java
+Exec=java -jar /curseJavaByUnifal-master/curseJavaByUnifal-master.jar
+Icon=/curseJavaByUnifal-master/menu.png
+Terminal=false
+Type=Application

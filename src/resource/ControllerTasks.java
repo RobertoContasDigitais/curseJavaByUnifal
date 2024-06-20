@@ -64,6 +64,7 @@ public class ControllerTasks{
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public LinkedHashMap getMapTheTaskByUser(String user, String passWord){
         
         if((user.equals("Roberto")) && (passWord.equals("Senha"))){
